@@ -9,7 +9,7 @@ use Phalcon\Mvc\User\Component;
  */
 class Elements extends Component{
 
-    private $_headerMenu = array('navbar-left' => array('index' => array('caption' => 'Home', 'action' => 'index'), 'invoices' => array('caption' => 'Invoices', 'action' => 'index'), 'about' => array('caption' => 'About', 'action' => 'index'), 'contact' => array('caption' => 'Contact', 'action' => 'index'),), 'navbar-right' => array('session' => array('caption' => 'Log In/Sign Up', 'action' => 'index'),));
+    private $_headerMenu = array('navbar-left' => array('index' => array('caption' => 'Home', 'action' => 'index'), 'invoices' => array('caption' => 'Invoices', 'action' => 'index'), 'about' => array('caption' => 'About', 'action' => 'index'), 'contact' => array('caption' => 'Contact', 'action' => 'index'),), );
 
     private $_tabs = array('Invoices' => array('controller' => 'invoices', 'action' => 'index', 'any' => false), 'Companies' => array('controller' => 'companies', 'action' => 'index', 'any' => true), 'Products' => array('controller' => 'products', 'action' => 'index', 'any' => true), 'Product Types' => array('controller' => 'producttypes', 'action' => 'index', 'any' => true), 'Your Profile' => array('controller' => 'invoices', 'action' => 'profile', 'any' => false));
 

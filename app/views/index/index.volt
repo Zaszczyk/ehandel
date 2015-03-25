@@ -4,7 +4,7 @@
 <div class="jumbotron">
     <h1>Witaj Studencie</h1>
     <p>W tej prostej aplikacji, pokażemy Ci jak działają płatności internetowe PayPal.</p>
-    <p>{{ link_to('order', 'Zamów produkt &raquo;', 'class': 'btn btn-primary btn-large btn-success') }}</p>
+    <p>{{ link_to('products', 'Zamów produkt &raquo;', 'class': 'btn btn-primary btn-large btn-success') }}</p>
 </div>
 
 <div class="row">

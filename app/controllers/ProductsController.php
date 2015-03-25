@@ -18,46 +18,19 @@ class ProductsController extends ControllerBase{
      * Shows the index action
      */
     public function indexAction(){
-        $this->session->conditions = null;
-        $this->view->form = new ProductsForm;
-    }
-
-    /**
-     * Search products based on current criteria
-     */
-    public function searchAction(){
         $numberPage = 1;
-        if($this->request->isPost()){
-            $query = Criteria::fromInput($this->di, "Products", $this->request->getPost());
-            $this->persistent->searchParams = $query->getParams();
-        }
-        else{
-            $numberPage = $this->request->getQuery("page", "int");
-        }
-
-        $parameters = array();
-        if($this->persistent->searchParams){
-            $parameters = $this->persistent->searchParams;
-        }
-
-        $products = Products::find($parameters);
+        $products = Products::find();
         if(count($products) == 0){
-            $this->flash->notice("The search did not find any products");
+            $this->flash->notice("Brak produktów w bazie danych.");
 
-            return $this->forward("products/index");
+            return true;
         }
+
 
         $paginator = new Paginator(array("data" => $products, "limit" => 10, "page" => $numberPage));
 
         $this->view->page = $paginator->getPaginate();
         $this->view->products = $products;
-    }
-
-    /**
-     * Shows the form to create a new product
-     */
-    public function newAction(){
-        $this->view->form = new ProductsForm(null, array('edit' => true));
     }
 
     /**

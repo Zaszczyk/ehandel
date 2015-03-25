@@ -65,14 +65,8 @@ class SecurityPlugin extends Plugin{
                 $acl->addRole($role);
             }
 
-            //Private area resources
-            $privateResources = array('companies' => array('index', 'search', 'new', 'edit', 'save', 'create', 'delete'), 'products' => array('index', 'search', 'new', 'edit', 'save', 'create', 'delete'), 'producttypes' => array('index', 'search', 'new', 'edit', 'save', 'create', 'delete'), 'invoices' => array('index', 'profile'));
-            foreach($privateResources as $resource => $actions){
-                $acl->addResource(new Resource($resource), $actions);
-            }
-
             //Public area resources
-            $publicResources = array('index' => array('index'), 'about' => array('index'), 'register' => array('index'), 'errors' => array('show404', 'show500'), 'session' => array('index', 'register', 'start', 'end'), 'contact' => array('index', 'send'));
+            $publicResources = array('index' => array('index'), 'about' => array('index'), 'register' => array('index'), 'errors' => array('show404', 'show500'), 'session' => array('index', 'register', 'start', 'end'), 'contact' => array('index', 'send'), 'companies' => array('index', 'search', 'new', 'edit', 'save', 'create', 'delete'), 'products' => array('index', 'search', 'new', 'edit', 'save', 'create', 'delete'), 'producttypes' => array('index', 'search', 'new', 'edit', 'save', 'create', 'delete'), 'invoices' => array('index', 'profile'));
             foreach($publicResources as $resource => $actions){
                 $acl->addResource(new Resource($resource), $actions);
             }
@@ -86,12 +80,6 @@ class SecurityPlugin extends Plugin{
                 }
             }
 
-            //Grant acess to private area to role Users
-            foreach($privateResources as $resource => $actions){
-                foreach($actions as $action){
-                    $acl->allow('Users', $resource, $action);
-                }
-            }
 
             //The acl is stored in session, APC would be useful here too
             $this->persistent->acl = $acl;
