@@ -69,7 +69,6 @@ class OrdersController extends ControllerBase{
         }
 
         $this->view->form = new PaymentForm(null, array('order' => $order));
-
     }
 
     public function payAction(){
@@ -78,36 +77,46 @@ class OrdersController extends ControllerBase{
         }
         $hash = $this->request->getPost('hash');
 
-        $order = Orders::findFirst('hash = "'.$hash.'"')->toArray();
+        $order = Orders::findFirst('hash = "'.$hash.'"');
         if($order == null){
             return $this->response->redirect('orders/new');
         }
 
+        $this->_goToPaypal($order);
     }
 
-    private function goToPaypal(){
-        if(Config::PP_SANDBOX === true)
+    private function _goToPaypal($order){
+
+        if($this->config->paypal->sandbox == true)
             $url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
         else
             $url = 'https://www.paypal.com/cgi-bin/webscr';
 
+        $returnUrl = $this->config->application->path.$this->config->paypal->returnUrl;
+        $cancelUrl = $this->config->application->path.$this->config->paypal->cancelUrl;
+        $notifyUrl = $this->config->application->path.$this->config->paypal->notifyUrl;
+
         // Check if paypal request or response
 
         // Firstly Append paypal account to querystring
-        $querystring = "?business=" . urlencode(Config::PP_EMAIL) . "&";
+        $querystring = "?business=" . urlencode($this->di->get('config')['paypal']['email']) . "&";
 
         // Append amount& currency (L) to quersytring so it cannot be edited in html
 
         //The item name and amount can be brought in dynamically by querying the $_POST['item_number'] variable.
-        $querystring .= "item_name=" . urlencode($item_name) . "&";
-        $querystring .= "amount=" . urlencode($value) . "&";
+        $querystring .= "item_name=" . urlencode($order->products->name) . "&";
+        $querystring .= "amount=" . '99.90' . "&";
+        $querystring .= "quantity=". '1'.'&';
+        $querystring .= "currency_code=". urlencode($order->currency).'&';
+
 
         // Append paypal return addresses
-        $querystring .= "return=" . urlencode(stripslashes($return_url)) . "&";
-        $querystring .= "cancel_return=" . urlencode(stripslashes($cancel_url)) . "&";
-        $querystring .= "notify_url=" . urlencode($notify_url) . '&';
-        $querystring .= "custom=" . $_SESSION['id'] . '&';
+        $querystring .= "return=" . urlencode(stripslashes($returnUrl)) . "&";
+        $querystring .= "cancel_return=" . urlencode(stripslashes($cancelUrl)) . "&";
+        $querystring .= "notify_url=" . urlencode($notifyUrl) . '&';
+        $querystring .= "custom=" . $order->hash . '&';
         // Append querystring with custom field
+
 
         //loop for posted values and append to querystring
         foreach($_POST as $key => $value){
@@ -115,8 +124,11 @@ class OrdersController extends ControllerBase{
             $querystring .= "$key=$value&";
         }
 
+        var_dump($this->config->paypal->sandbox);
+        echo '<pre>';
+        print_r($url . $querystring);
+        echo '</pre>';
         // Redirect to paypal IPN
-        mail(Config::PM_ERROR_ADDRESS, 'paypal', $querystring);
         header('Location: '.$url . $querystring);
     }
 }

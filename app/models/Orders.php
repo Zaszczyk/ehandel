@@ -12,4 +12,9 @@ class Orders extends Model{
             return false;
         }
     }
+
+    public function initialize()
+    {
+        $this->hasOne("product_id", "Products", "id");
+    }
 }

@@ -27,6 +27,7 @@ class ProductsController extends ControllerBase{
         }
 
 
+
         $paginator = new Paginator(array("data" => $products, "limit" => 10, "page" => $numberPage));
 
         $this->view->page = $paginator->getPaginate();

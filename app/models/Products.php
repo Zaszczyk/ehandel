@@ -19,24 +19,8 @@ class Products extends Model{
 
     public $currency;
 
-    /**
-     * Products initializer
-     */
-    public function initialize(){
-        $this->belongsTo('product_types_id', 'ProductTypes', 'id', array('reusable' => true));
+    public function initialize()
+    {
+        $this->hasMany("id", "Orders", "product_id");
     }
-
-    /**
-     * Returns a human representation of 'active'
-     *
-     * @return string
-     */
-    public function getActiveDetail(){
-        if($this->active == 'Y'){
-            return 'Yes';
-        }
-
-        return 'No';
-    }
-
 }
