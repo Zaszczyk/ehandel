@@ -1,13 +1,11 @@
 
 {{ content() }}
 
-<div align="right">
-    {{ link_to("companies/new", "Create Companies", "class": "btn btn-primary") }}
-</div>
 
-{{ form("companies/search") }}
 
-<h2>Search companies</h2>
+{{ form("orders/pay") }}
+
+<h2>Opłać zamówienie</h2>
 
 <fieldset>
 
@@ -25,7 +23,7 @@
 {% endfor %}
 
 <div class="control-group">
-    {{ submit_button("Search", "class": "btn btn-primary") }}
+    {{ submit_button("Przejdź do PayPal", "class": "btn btn-primary") }}
 </div>
 
 </fieldset>

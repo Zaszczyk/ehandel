@@ -23,7 +23,7 @@
         <td>{{ product.name }}</td>
         <td>{{ product.description }}</td>
         <td>{{ product.price }}</td>
-        <td>{{ link_to("order/create/" ~ product.id, '<i class="glyphicon glyphicon-edit"></i> Zamów', "class": "btn btn-default") }}</td>
+        <td>{{ link_to("orders/new/" ~ product.id, '<i class="glyphicon glyphicon-edit"></i> Zamów', "class": "btn btn-default") }}</td>
     </tr>
     </tbody>
     {% if loop.last %}

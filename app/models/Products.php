@@ -11,21 +11,13 @@ class Products extends Model{
      */
     public $id;
 
-    /**
-     * @var string
-     */
     public $name;
 
-    /**
-     * @var string
-     */
     public $description;
 
-    /**
-     * @var string
-     */
     public $price;
 
+    public $currency;
 
     /**
      * Products initializer
