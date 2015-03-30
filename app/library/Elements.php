@@ -9,7 +9,12 @@ use Phalcon\Mvc\User\Component;
  */
 class Elements extends Component{
 
-    private $_headerMenu = array('navbar-left' => array('index' => array('caption' => 'Start', 'action' => 'index'), 'invoices' => array('caption' => 'Invoices', 'action' => 'index'), 'contact' => array('caption' => 'Kontakt', 'action' => 'index'),), );
+    private $_headerMenu = array(
+        'navbar-left' => array(
+            'index' => array('controller' => 'index', 'caption' => 'Start', 'action' => 'index'),
+            'contact' => array('controller' => 'index', 'caption' => 'Kontakt', 'action' => 'contact'),
+            ),
+        );
 
     /**
      * Builds header menu with left and right items
@@ -26,18 +31,18 @@ class Elements extends Component{
             unset($this->_headerMenu['navbar-left']['invoices']);
         }
 
-        $controllerName = $this->view->getControllerName();
+        $actionName = $this->view->getActionName();
         foreach($this->_headerMenu as $position => $menu){
             echo '<div class="nav-collapse">';
             echo '<ul class="nav navbar-nav ', $position, '">';
             foreach($menu as $controller => $option){
-                if($controllerName == $controller){
+                if($actionName == $option['action']){
                     echo '<li class="active">';
                 }
                 else{
                     echo '<li>';
                 }
-                echo $this->tag->linkTo($controller . '/' . $option['action'], $option['caption']);
+                echo $this->tag->linkTo($option['controller'] . '/' . $option['action'], $option['caption']);
                 echo '</li>';
             }
             echo '</ul>';

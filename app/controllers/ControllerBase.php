@@ -5,7 +5,7 @@ use Phalcon\Mvc\Controller;
 class ControllerBase extends Controller{
 
     protected function initialize(){
-        $this->tag->prependTitle('INVO | ');
+        $this->tag->prependTitle('PayPal Example - ehandel | ');
         $this->view->setTemplateAfter('main');
     }
 
