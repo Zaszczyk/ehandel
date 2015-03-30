@@ -16,17 +16,14 @@ class OrdersForm extends Form{
 
         $productName = new Text("product");
         $productName->setLabel("Produkt");
-        $productName->setFilters(array('striptags', 'string'));
-        $productName->setAttribute('readonly', 'readonly');
+        $productName->setAttribute('disabled', 'disabled');
         $productName->setAttribute('value', $options['product']['name']);
-        $productName->addValidators(array(new PresenceOf(array('message' => 'Imię i nazwisko są wymagane.'))));
         $this->add($productName);
 
         $price = new Text("price");
         $price->setLabel("Cena");
-        $price->setFilters(array('striptags', 'string'));
-        $price->setAttribute('readonly', 'readonly');
-        $price->setAttribute('value', $options['product']['price']);
+        $price->setAttribute('disabled', 'disabled');
+        $price->setAttribute('value', $options['product']['price'].' '.$options['product']['currency']);
         $this->add($price);
 
         $name = new Text("name");
